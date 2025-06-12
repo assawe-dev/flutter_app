@@ -35,7 +35,7 @@ class Login extends StatelessWidget {
                             filled: true,
                             fillColor: Colors.white,
                             hintText: 'USERNAME....',
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide.none,
@@ -50,7 +50,7 @@ class Login extends StatelessWidget {
                             filled: true,
                             fillColor: Colors.white,
                             hintText: 'PASSWORD....',
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide.none,
@@ -58,7 +58,7 @@ class Login extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Align(
+                        const Align(
                           alignment: Alignment.centerRight,
                           child: Text(
                             'forgot password?',
@@ -80,8 +80,8 @@ class Login extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         // أو تسجيل الدخول بواسطة
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Expanded(child: Divider(color: Colors.white, indent: 30)),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -107,9 +107,9 @@ class Login extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text("Don’t have an account? ",
                                 style: TextStyle(color: Colors.white)),
                             Text(

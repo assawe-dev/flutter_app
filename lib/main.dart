@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => Login()),
+        MaterialPageRoute(builder: (_) => const Login()),
       );
     });
   }
@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Image.asset('images/logo.png', width: 100, height: 100),
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
         ]),
       ),
     );
