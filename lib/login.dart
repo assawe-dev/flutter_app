@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:swehlawe/RegisterPage.dart';
+// ignore: unused_import
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -97,28 +101,38 @@ class Login extends StatelessWidget {
                           children: [
                             IconButton(
                                 onPressed: () {},
-                                icon: Image.asset('images/facebook.png'),
+                                icon: Image.asset('assets/images/facebook.png'),
                                 iconSize: 40),
                             const SizedBox(width: 20),
                             IconButton(
                                 onPressed: () {},
-                                icon: Image.asset('images/google.png'),
+                                icon: Image.asset('assets/images/google.png'),
                                 iconSize: 40),
                           ],
                         ),
                         const SizedBox(height: 10),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Don’t have an account? ",
                                 style: TextStyle(color: Colors.white)),
-                            Text(
-                              "Register Now",
-                              style: TextStyle(
-                                  color: Colors.yellow,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline),
-                            )
+                            GestureDetector(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegisterPage()),
+    );
+  },
+  child: Text(
+    "Register Now",
+    style: TextStyle(
+      color: Colors.yellow,
+      fontWeight: FontWeight.bold,
+      decoration: TextDecoration.underline,
+    ),
+  ),
+)
+
                           ],
                         ),
                       ],
@@ -135,10 +149,8 @@ class Login extends StatelessWidget {
                 Center(
                   child: Column(
                     children: [
-                      Image.asset('assets/images/logo.png',
-                          width: 100, height: 100),
-                      const SizedBox(height: 10),
-                      const Icon(Icons.star, color: Colors.yellow, size: 30),
+                      Image.asset('assets/images/logo2.png',
+                          width: 150, height: 150),
                       const SizedBox(height: 10),
                       const Text(
                         "مرحباً بك\nفي ناديك المفضل!",
