@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swehlawe/RegisterPage.dart';
 import 'package:swehlawe/HomePage.dart';
+import 'package:swehlawe/HomePage.dart';
+import 'package:swehlawe/RegisterPage.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
-
   @override
   State<Login> createState() => _LoginState();
 }
@@ -23,21 +24,19 @@ class _LoginState extends State<Login> {
       _showMessage("يرجى ملء جميع الحقول");
       return;
     }
-
     setState(() => isLoading = true);
-
     try {
       final response = await Supabase.instance.client.auth.signInWithPassword(
         email: email,
         password: password,
       );
-
       if (response.user != null) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (_) => const HomePage() )
+          MaterialPageRoute(builder: (_) => const HomePage()),
         );
+      } else {
+        _showMessage("فشل في تسجيل الدخول. تحقق من البريد وكلمة المرور.");
       }
     } catch (error) {
       _showMessage("فشل في تسجيل الدخول: ${error.toString()}");
@@ -48,7 +47,7 @@ class _LoginState extends State<Login> {
 
   void _showMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+      SnackBar(content: Text(message), duration: const Duration(seconds: 2)),
     );
   }
 
@@ -57,13 +56,17 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            // الشكل الأحمر
-            Align(
-              alignment: Alignment.bottomCenter,
+            const SizedBox(height: 30),
+            Image.asset(
+              'assets/images/logo2.png',
+              width: 200,
+              height: 200,
+            ),
+            const SizedBox(height: 10),
+            Expanded(
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.6,
                 decoration: const BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.only(
@@ -72,14 +75,21 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        const SizedBox(height: 10),
+                        const Text(
+                          "مرحباً بك\nفي ناديك المفضل!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         const SizedBox(height: 20),
-
-                        // البريد الإلكتروني
                         TextField(
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
@@ -95,8 +105,6 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         const SizedBox(height: 20),
-
-                        // كلمة المرور
                         TextField(
                           controller: passwordController,
                           obscureText: true,
@@ -111,7 +119,6 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-
                         const SizedBox(height: 10),
                         const Align(
                           alignment: Alignment.centerRight,
@@ -120,9 +127,7 @@ class _LoginState extends State<Login> {
                             style: TextStyle(color: Colors.white, fontSize: 12),
                           ),
                         ),
-
                         const SizedBox(height: 20),
-                        // زر الدخول
                         ElevatedButton(
                           onPressed: isLoading ? null : _signIn,
                           style: ElevatedButton.styleFrom(
@@ -134,57 +139,56 @@ class _LoginState extends State<Login> {
                                 horizontal: 100, vertical: 15),
                           ),
                           child: isLoading
-                              ? const CircularProgressIndicator(
-                                  color: Colors.white)
-                              : const Text('دخول',
-                                  style: TextStyle(fontSize: 18)),
+                              ? const CircularProgressIndicator(color: Colors.white)
+                              : const Text(
+                                  'دخول',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                         ),
-
                         const SizedBox(height: 20),
                         const Row(
                           children: [
-                            Expanded(
-                                child:
-                                    Divider(color: Colors.white, indent: 30)),
+                            Expanded(child: Divider(color: Colors.white, indent: 30)),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text('أو سجل بواسطة',
-                                  style: TextStyle(color: Colors.white)),
+                              child: Text(
+                                'أو سجل بواسطة',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                            Expanded(
-                                child: Divider(
-                                    color: Colors.white, endIndent: 30)),
+                            Expanded(child: Divider(color: Colors.white, endIndent: 30)),
                           ],
                         ),
-
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () {},
-                                icon: Image.asset('assets/images/facebook.png'),
-                                iconSize: 40),
+                              onPressed: () {},
+                              icon: Image.asset('assets/images/facebook.png'),
+                              iconSize: 40,
+                            ),
                             const SizedBox(width: 20),
                             IconButton(
-                                onPressed: () {},
-                                icon: Image.asset('assets/images/google.png'),
-                                iconSize: 40),
+                              onPressed: () {},
+                              icon: Image.asset('assets/images/google.png'),
+                              iconSize: 40,
+                            ),
                           ],
                         ),
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("ليس لديك حساب؟ ",
-                                style: TextStyle(color: Colors.white)),
+                            const Text(
+                              "ليس لديك حساب؟ ",
+                              style: TextStyle(color: Colors.white),
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterPage()),
+                                  MaterialPageRoute(builder: (context) => const RegisterPage()),
                                 );
                               },
                               child: const Text(
@@ -204,34 +208,20 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-
-            // الشعار والنص
-            Column(
-              children: [
-                const SizedBox(height: 30),
-                Center(
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/logo2.png',
-                          width: 150, height: 150),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "مرحباً بك\nفي ناديك المفضل!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
     );
   }
 }
+
+//  class HomePage extends StatelessWidget {
+//   const HomePage({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text('Home')),
+//       body: const Center(child: Text('تم تسجيل الدخول بنجاح!')),
+//     );
+//   }
+// }

@@ -4,7 +4,6 @@ import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
-
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
@@ -14,7 +13,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
-
   bool isLoading = false;
 
   Future<void> _registerUser() async {
@@ -27,27 +25,27 @@ class _RegisterPageState extends State<RegisterPage> {
       _showMessage("الرجاء تعبئة جميع الحقول");
       return;
     }
-
     if (password != confirmPassword) {
       _showMessage("كلمة المرور غير متطابقة");
       return;
     }
-
     setState(() => isLoading = true);
-
     try {
       final response = await Supabase.instance.client.auth.signUp(
         email: email,
         password: password,
         data: {'username': username},
       );
-
       if (response.user != null) {
         _showMessage("تم التسجيل بنجاح! قم بتسجيل الدخول.");
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const Login()),
-        );
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Login()),
+          );
+        });
+      } else {
+        _showMessage("فشل في التسجيل. تأكد من صحة البيانات.");
       }
     } catch (e) {
       _showMessage("خطأ في التسجيل: ${e.toString()}");
@@ -117,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
                       ),
                       child: isLoading
-                          ? CircularProgressIndicator(color: Colors.white)
+                          ? const CircularProgressIndicator(color: Colors.white)
                           : const Text('تسجيل', style: TextStyle(fontSize: 18)),
                     ),
                     const SizedBox(height: 20),
@@ -126,8 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         Expanded(child: Divider(color: Colors.white, indent: 20)),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
-                          child:
-                              Text("or register with", style: TextStyle(color: Colors.white)),
+                          child: Text("or register with", style: TextStyle(color: Colors.white)),
                         ),
                         Expanded(child: Divider(color: Colors.white, endIndent: 20)),
                       ],
@@ -157,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             style: TextStyle(color: Colors.white)),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => const Login()),
                             );
